@@ -50,7 +50,7 @@ const CreateProduct = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8081/v1/api/createProduct', data, {
+            const response = await axios.post('https://cloud-computing-backend.vercel.app/v1/api/createProduct', data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
