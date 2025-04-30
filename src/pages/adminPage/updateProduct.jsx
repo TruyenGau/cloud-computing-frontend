@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../../components/layout/adminLayout/header';
-import SideBar from '../../components/layout/adminLayout/sidebar';
 import Footer from '../../components/layout/adminLayout/footer';
-
 import axios from "../../util/axios.customize"; // Adjust the import path as necessary
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getAProduct } from '../../util/api';
 import { notification } from 'antd';
 
-
-const CreateProduct = () => {
+const UpdateProduct = () => {
+    const { id } = useParams();  // Lấy id từ URL
+    const [product, setProduct] = useState([]);
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -21,6 +21,37 @@ const CreateProduct = () => {
         address: '',
     });
     const [preview, setPreview] = useState(null);
+    const getProduct = async () => {
+        const data = await getAProduct(id);
+        setProduct(data[0]);
+    }
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            if (id) {
+                try {
+                    const responses = await getAProduct(id); // Gọi API để lấy thông tin sản phẩm
+                    const response = responses[0];
+                    setFormData({
+                        name: response.name,
+                        price: response.price,
+                        shortDesc: response.shortDesc,
+                        stock: response.stock,
+                        category: response.category,
+                        image: response.image,
+                        address: response.address,
+                    });
+                    setPreview(response.image); // Set preview hình ảnh từ backend
+                } catch (error) {
+                    console.error('Error fetching product details:', error);
+                    alert('Failed to fetch product details!');
+                }
+            }
+        };
+
+        fetchProduct();
+    }, [id]); // Chỉ gọi lại nếu id thay đổi
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -51,26 +82,25 @@ const CreateProduct = () => {
         }
 
         try {
-            const response = await axios.post('https://cloud-computing-backend.vercel.app/v1/api/createProduct', data, {
-
+            const response = await axios.post(`/v1/api/updateProduct/${id}`, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
 
-            console.log(response.data); // Kiểm tra phản hồi từ backend
+            console.log(response.data); // Check the response from backend
             notification.success({
-                message: 'Tạo sản phẩm thành công!',
+                message: 'Chỉnh sửa sản phẩm thành công',
                 showProgress: true
-            })
-
+            });
             navigate("/showproduct");
 
         } catch (error) {
-            console.error('Error creating product:', error);
-            alert('Failed to create product!');
+            console.error('Error updating product:', error);
+            alert('Failed to update product!');
         }
     };
+
 
 
     return (
@@ -80,21 +110,19 @@ const CreateProduct = () => {
                 <div id="layoutSidenav_content">
                     <main>
                         <div className="container-fluid px-4">
-                            <h1 className="mt-4">Sản phẩm</h1>
+                            <h1 className="mt-4">Update Product</h1>
                             <ol className="breadcrumb mb-4">
-                                <li className="breadcrumb-item"><a href="/homeadmin">Trang chủ</a></li>
-                                <li className="breadcrumb-item active">Tạo sản phẩm</li>
+                                <li className="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                                <li className="breadcrumb-item"><a href="/admin/product">Product</a></li>
+                                <li className="breadcrumb-item active">Update</li>
                             </ol>
+
                             <div className="mt-5">
                                 <div className="row">
                                     <div className="col-md-8 col-12 mx-auto">
-                                        <h3>Tạo một sản phẩm mới</h3>
+                                        <h3>Update Product</h3>
                                         <hr />
-                                        <form
-                                            onSubmit={handleSubmit}
-                                            className="row"
-                                            encType="multipart/form-data"
-                                        >
+                                        <form onSubmit={handleSubmit} className="row" encType="multipart/form-data">
                                             {/* Product Name */}
                                             <div className="mb-3 col-12 col-md-6">
                                                 <label className="form-label">Name:</label>
@@ -134,18 +162,7 @@ const CreateProduct = () => {
                                                 />
                                             </div>
 
-                                            {/* Address */}
-                                            <div className="mb-3 col-12 col-md-6">
-                                                <label className="form-label">Address:</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    name="address"
-                                                    value={formData.address}
-                                                    onChange={handleChange}
-                                                    required
-                                                />
-                                            </div>
+
 
                                             {/* Stock */}
                                             <div className="mb-3 col-12 col-md-6">
@@ -165,7 +182,7 @@ const CreateProduct = () => {
                                                 <label className="form-label">Category:</label>
                                                 <select
                                                     className="form-select"
-                                                    name="category" // Changed from "factory" to "category"
+                                                    name="category"
                                                     value={formData.category}
                                                     onChange={handleChange}
                                                     required
@@ -193,11 +210,11 @@ const CreateProduct = () => {
                                                         cursor: 'pointer',
                                                     }}
                                                 >
-                                                    Upload Avatar
+                                                    Image product
                                                 </label>
                                                 <input
                                                     type="file"
-                                                    name="image" // Changed from "file" to "image"
+                                                    name="image"
                                                     id="btnUpload"
                                                     hidden
                                                     onChange={handleUploadFileUser}
@@ -207,8 +224,8 @@ const CreateProduct = () => {
                                                 <div
                                                     style={{
                                                         marginTop: '10px',
-                                                        height: '100px',
-                                                        width: '150px',
+                                                        height: '150px',
+                                                        width: '200px',
                                                         marginBottom: '15px',
                                                     }}
                                                 >
@@ -218,7 +235,7 @@ const CreateProduct = () => {
                                                             width: '100%',
                                                             objectFit: 'contain',
                                                         }}
-                                                        src={preview}
+                                                        src={`${import.meta.env.VITE_BACKEND_URL}/routes/productLaptop/${preview}`}
                                                         alt="Preview"
                                                     />
                                                 </div>
@@ -227,7 +244,7 @@ const CreateProduct = () => {
                                             {/* Submit Button */}
                                             <div className="col-12 mb-5" style={{ marginTop: "40px" }}>
                                                 <button type="submit" className="btn btn-primary">
-                                                    Tạo sản phẩm
+                                                    Update Product
                                                 </button>
                                             </div>
                                         </form>
@@ -243,4 +260,4 @@ const CreateProduct = () => {
     );
 };
 
-export default CreateProduct;
+export default UpdateProduct;

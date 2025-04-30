@@ -57,9 +57,8 @@ const getProductDetail = (id) => {
     return axios.get(URL_API);
 }
 const getAProduct = (id) => {
-    const URL_API = "/v1/api/getAProduct";
-    const data = id;
-    return axios.get(URL_API, data);
+    const URL_API = `/v1/api/getAProduct/${id}`; // Truyền id dưới dạng query parameter
+    return axios.get(URL_API);
 }
 
 export {

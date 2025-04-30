@@ -16,6 +16,7 @@ import HomeAdmin from './pages/adminPage/homeAdmin.jsx';
 import CreateProduct from './pages/adminPage/createProduct.jsx';
 import ShowProduct from './pages/adminPage/showProduct.jsx';
 import DetailProduct from './pages/adminPage/detailProduct.jsx';
+import UpdateProduct from './pages/adminPage/updateProduct.jsx';
 
 
 
@@ -62,6 +63,10 @@ let router = createBrowserRouter([
   {
     path: "getProductDetail/:id",
     element: <DetailProduct />
+  },
+  {
+    path: "updateProduct/:id",
+    element: <UpdateProduct />
   },
 
 

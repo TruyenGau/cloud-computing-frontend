@@ -85,7 +85,7 @@ const ShowProduct = () => {
 
                                                         <td>
                                                             <Link to={`/getProductDetail/${product._id}`} className="btn btn-success">Xem</Link>
-                                                            <a href={`/admin/product/update/${product.id}`} className="btn btn-warning mx-2">Chỉnh sửa</a>
+                                                            <Link to={`/updateProduct/${product._id}`} className="btn btn-warning mx-2">Chỉnh sửa</Link>
                                                             <button className="btn btn-danger" onClick={() => { handleDeleteProduct(product._id) }}>Xóa</button>
                                                         </td>
                                                     </tr>
