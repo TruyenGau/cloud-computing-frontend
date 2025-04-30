@@ -110,17 +110,17 @@ const UpdateProduct = () => {
                 <div id="layoutSidenav_content">
                     <main>
                         <div className="container-fluid px-4">
-                            <h1 className="mt-4">Update Product</h1>
+                            <h1 className="mt-4">Chỉnh sửa  thông tin sản phẩm</h1>
                             <ol className="breadcrumb mb-4">
-                                <li className="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                                <li className="breadcrumb-item"><a href="/admin/product">Product</a></li>
-                                <li className="breadcrumb-item active">Update</li>
+                                <li className="breadcrumb-item"><a href="/homeadmin">Tranng chủ</a></li>
+                                <li className="breadcrumb-item"><a href="/showproduct">Sản phẩm</a></li>
+                                <li className="breadcrumb-item active">Chỉnh sửa thông tin</li>
                             </ol>
 
                             <div className="mt-5">
                                 <div className="row">
                                     <div className="col-md-8 col-12 mx-auto">
-                                        <h3>Update Product</h3>
+                                        <h3>Cập nhật thông tin</h3>
                                         <hr />
                                         <form onSubmit={handleSubmit} className="row" encType="multipart/form-data">
                                             {/* Product Name */}
@@ -210,7 +210,7 @@ const UpdateProduct = () => {
                                                         cursor: 'pointer',
                                                     }}
                                                 >
-                                                    Image product
+                                                    Hình ảnh
                                                 </label>
                                                 <input
                                                     type="file"
@@ -244,7 +244,7 @@ const UpdateProduct = () => {
                                             {/* Submit Button */}
                                             <div className="col-12 mb-5" style={{ marginTop: "40px" }}>
                                                 <button type="submit" className="btn btn-primary">
-                                                    Update Product
+                                                    Cập nhật
                                                 </button>
                                             </div>
                                         </form>
