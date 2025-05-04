@@ -16,6 +16,10 @@ const CustomHeader = () => {
 
     const logout = () => {
         localStorage.clear("access_token");
+        Notifications.success({
+            message: "Đăng xuất thành công",
+            showProgress: true
+        })
         setAuth({
             isAuthenticated: false,
             user: {

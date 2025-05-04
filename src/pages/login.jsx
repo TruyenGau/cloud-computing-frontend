@@ -18,7 +18,7 @@ const LoginPage = () => {
             localStorage.setItem('access_token', res.access_token);
             notification.success({
                 message: 'Người dùng đăng nhập thành công',
-                description: 'success',
+                showProgress: true
             });
             setAuth({ isAuthenticated: true, user: res.user });
             navigate('/');
@@ -26,6 +26,7 @@ const LoginPage = () => {
             localStorage.setItem('access_token', res.access_token);
             notification.success({
                 message: 'Đăng nhập admin thành công',
+                showProgress: true
             });
             setAuth({ isAuthenticated: true, user: res.user });
             navigate('/homeadmin');
