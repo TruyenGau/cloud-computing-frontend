@@ -3,8 +3,7 @@ import { HomeOutlined, OrderedListOutlined, SettingOutlined, UsergroupAddOutline
 import { Layout, Menu, Button } from 'antd';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/auth.context';
-import { ethers } from 'ethers';
-import { updateAccount } from '../../util/api';
+import { Button, notification } from 'antd';
 
 const { Header } = Layout;
 
@@ -16,7 +15,7 @@ const CustomHeader = () => {
 
     const logout = () => {
         localStorage.clear("access_token");
-        Notifications.success({
+        notification.success({
             message: "Đăng xuất thành công",
             showProgress: true
         })
