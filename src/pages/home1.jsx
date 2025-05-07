@@ -10,47 +10,50 @@ import { notification } from "antd";
 
 const HomeTest = () => {
 
+    const [data, setData] = useState([]);   // To store all products
+    const [filteredData, setFilteredData] = useState([]); // To store filtered products based on search
+    const [searchQuery, setSearchQuery] = useState(''); // Search query state
 
-    const [data, setData] = useState([]);
-    const [countProduct, setCountProduct] = useState(0);
     const getProduct = async () => {
         const data = await getAllProduct();
-        setCountProduct(data.length);
         setData(data);
+        setFilteredData(data); // Initially, show all products
     }
 
+    const handleSearch = (e) => {
+        const query = e.target.value.toLowerCase(); // Convert to lowercase for case-insensitive search
+        setSearchQuery(query);
+
+        // Filter products based on the query matching either name or short description
+        const filtered = data.filter((product) =>
+            product.name.toLowerCase().includes(query) ||
+            product.shortDesc.toLowerCase().includes(query)
+        );
+        setFilteredData(filtered); // Set the filtered products to display
+    }
 
     const handleBuyProduct = async (product) => {
-
         const signer = await provider.getSigner();
         const address = await signer.getAddress();
         if (address !== auth.user.address) {
             alert("Địa chỉ ví MetaMask hiện tại không trùng với ví của người dùng!. Vui lòng chọn đúng tài khoản");
             return;
         }
-        // const product = await getAProduct(id);
-        // alert(id)
 
         const transaction = await dappazon
             .connect(signer)
             .buy(product.id, 1, { value: product.price });
         await transaction.wait();
 
-        // alert("Purchase successful!", address);
         notification.success({
             message: "Mua sản phẩm thành công!",
             showProgress: true
-
-
-        })
+        });
     }
 
     useEffect(() => {
-        // Gọi hàm để lấy số lượng sản phẩm và sau đó gọi loadBlockchainData
         getProduct();
     }, []);
-
-
 
     return (
         <>
@@ -69,25 +72,38 @@ const HomeTest = () => {
                                             className="d-flex m-2 py-2 bg-light rounded-pill active"
                                             href="/products"
                                         >
-
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
+
+                        {/* Search Bar */}
+                        <div className="row mb-5">
+                            <div className="col-12">
+                                <input
+                                    type="text"
+                                    placeholder="Tìm sản phẩm..."
+                                    value={searchQuery}
+                                    onChange={handleSearch} // Handle search query change
+                                    className="form-control"
+                                />
+                            </div>
+                        </div>
+
                         <div className="tab-content">
                             <div id="tab-1" className="tab-pane fade show p-0 active">
                                 <div className="row g-4">
                                     <div className="col-lg-12">
                                         <div className="row g-4">
-                                            {data.map((product) => (
+                                            {filteredData.map((product) => (
                                                 <div key={product.id} className="col-md-6 col-lg-4 col-xl-3">
                                                     <div className="rounded position-relative fruite-item">
                                                         <div className="fruite-img">
                                                             <img
-                                                                src={`${import.meta.env.VITE_BACKEND_URL}/routes/productLaptop/${product.image}`} alt="Product"
+                                                                src={`${import.meta.env.VITE_BACKEND_URL}/routes/productLaptop/${product.image}`}
+                                                                alt="Product"
                                                                 className="img-fluid w-100 rounded-top"
-
                                                             />
                                                         </div>
                                                         <div
@@ -98,10 +114,7 @@ const HomeTest = () => {
                                                         </div>
                                                         <div className="p-4 border border-secondary border-top-0 rounded-bottom">
                                                             <h4 style={{ fontSize: "15px" }}>
-                                                                {/* Sử dụng Link và truyền dữ liệu qua state */}
-                                                                <Link to={`/product/${product._id}`} state={{
-                                                                    product
-                                                                }}>
+                                                                <Link to={`/product/${product._id}`} state={{ product }}>
                                                                     {product.name}
                                                                 </Link>
                                                             </h4>
@@ -118,12 +131,13 @@ const HomeTest = () => {
                                                                     {product.price}.000.000 VNĐ
                                                                 </p>
 
-                                                                <button onClick={() => { handleBuyProduct(product) }} className="mx-auto btn border border-secondary rounded-pill px-3 text-primary"
+                                                                <button
+                                                                    onClick={() => handleBuyProduct(product)}
+                                                                    className="mx-auto btn border border-secondary rounded-pill px-3 text-primary"
                                                                 >
                                                                     <i className="fa fa-shopping-bag me-2 text-primary"></i>
                                                                     Mua ngay
                                                                 </button>
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -136,9 +150,8 @@ const HomeTest = () => {
                         </div>
                     </div>
                 </div>
-            </div >
+            </div>
             <Feature />
-
         </>
     );
 };
