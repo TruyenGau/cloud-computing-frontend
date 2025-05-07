@@ -58,7 +58,7 @@ const ShowProduct = () => {
                                     <div className="col-12 mx-auto">
                                         <div className="d-flex justify-content-between">
                                             <h3>Sản phẩm</h3>
-                                            <a href="/createproduct" className="btn btn-primary">Tạo sản phẩm</a>
+                                            {/* <a href="/createproduct" className="btn btn-primary">Tạo sản phẩm</a> */}
                                         </div>
                                         <hr />
                                         <table className="table table-bordered table-hover">
