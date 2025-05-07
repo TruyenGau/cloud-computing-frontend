@@ -32,24 +32,6 @@ const HomeTest = () => {
         setFilteredData(filtered); // Set the filtered products to display
     }
 
-    const handleBuyProduct = async (product) => {
-        const signer = await provider.getSigner();
-        const address = await signer.getAddress();
-        if (address !== auth.user.address) {
-            alert("Địa chỉ ví MetaMask hiện tại không trùng với ví của người dùng!. Vui lòng chọn đúng tài khoản");
-            return;
-        }
-
-        const transaction = await dappazon
-            .connect(signer)
-            .buy(product.id, 1, { value: product.price });
-        await transaction.wait();
-
-        notification.success({
-            message: "Mua sản phẩm thành công!",
-            showProgress: true
-        });
-    }
 
     useEffect(() => {
         getProduct();
@@ -86,7 +68,17 @@ const HomeTest = () => {
                                     placeholder="Tìm sản phẩm..."
                                     value={searchQuery}
                                     onChange={handleSearch} // Handle search query change
-                                    className="form-control"
+                                    className="form-control search-bar"
+                                    style={{
+                                        width: "100%",
+                                        padding: "12px 20px",
+                                        fontSize: "16px",
+                                        borderRadius: "30px",
+                                        border: "2px solid #ddd",
+                                        transition: "all 0.3s ease-in-out",
+                                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                                        backgroundColor: "#f8f8f8"
+                                    }}
                                 />
                             </div>
                         </div>
@@ -132,7 +124,7 @@ const HomeTest = () => {
                                                                 </p>
 
                                                                 <button
-                                                                    onClick={() => handleBuyProduct(product)}
+
                                                                     className="mx-auto btn border border-secondary rounded-pill px-3 text-primary"
                                                                 >
                                                                     <i className="fa fa-shopping-bag me-2 text-primary"></i>
