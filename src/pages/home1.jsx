@@ -45,7 +45,7 @@ const HomeTest = () => {
                     <div className="tab-class text-center">
                         <div className="row g-4">
                             <div className="col-lg-4 text-start">
-                                <h1>Sản phẩm nổi bật</h1>
+                                <h1 style={{ color: "#81c408" }}>Sản phẩm nổi bật</h1>
                             </div>
                             <div className="col-lg-8 text-end">
                                 <ul className="nav nav-pills d-inline-flex text-center mb-5">
@@ -76,7 +76,7 @@ const HomeTest = () => {
                                         borderRadius: "30px",
                                         border: "2px solid #ddd",
                                         transition: "all 0.3s ease-in-out",
-                                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                                        boxShadow: "0 4px 6px rgba(9, 52, 16, 0.1)",
                                         backgroundColor: "#f8f8f8"
                                     }}
                                 />
