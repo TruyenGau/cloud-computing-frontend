@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { deleteProduct, getAllProduct } from '../../util/api';
 import { use } from 'react';
 import { Link } from 'react-router-dom';
+import { notification } from 'antd';
 
 const ShowProduct = () => {
     const [products, setProducts] = useState([]);
@@ -19,7 +20,10 @@ const ShowProduct = () => {
                 if (result.EC === 1) {
                     // Xóa sản phẩm khỏi danh sách trên giao diện mà không cần gọi lại API
                     setProducts(products.filter(product => product._id !== id));
-                    alert("Đã xóa sản phẩm thành công!");
+                    notification.success({
+                        message: 'Đã xóa sản phẩm thành công',
+                        showProgress: true
+                    });
                 } else {
                     alert("Failed to delete the product.");
                 }
