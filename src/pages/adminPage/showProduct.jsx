@@ -96,7 +96,7 @@ const ShowProduct = () => {
                                                     <tr key={product._id}>
                                                         <th>{product._id}</th>
                                                         <td>{product.name}</td>
-                                                        <td>{product.price}</td>
+                                                        <td>{product.price}.000.000 VND</td>
                                                         <td>{product.category}</td>
                                                         <td>
                                                             <img
