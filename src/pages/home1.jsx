@@ -45,7 +45,7 @@ const HomeTest = () => {
                     <div className="tab-class text-center">
                         <div className="row g-4">
                             <div className="col-lg-4 text-start">
-                                <h1 style={{ color: "#81c408" }}>Sản phẩm nổi bật</h1>
+                                <h1 style={{ color: "#81c408" }}>Sản Phẩm Nổi Bật</h1>
                             </div>
                             <div className="col-lg-8 text-end">
                                 <ul className="nav nav-pills d-inline-flex text-center mb-5">
