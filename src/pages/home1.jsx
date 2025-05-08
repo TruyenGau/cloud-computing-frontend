@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import Banner from "../components/layout/banner";
 import Feature from "../components/layout/feature";
-import { getAllProduct, getAProduct, getProductDetail } from "../util/api";
+import { getAllProduct, getAProduct, getProductDetail } from "../util/api";  //lay out api call
 import { notification } from "antd";
 
 const HomeTest = () => {
